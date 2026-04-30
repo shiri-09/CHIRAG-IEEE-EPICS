@@ -112,9 +112,9 @@ def health_check():
 def generate_guidance(data: GuidanceInput):
     try:
         if data.module_type == 'growth':
-            prompt = f"Act as an empathetic pediatrician. The ML model analyzed a child's biometrics and diet, and detected a {data.risk_level} risk ({data.probability * 100:.1f}%) of stunting/malnutrition. Provide 2 short, simple, actionable sentences of parent guidance. First sentence in Kannada, second sentence in English."
+            prompt = f"Act as an empathetic pediatrician. The ML model analyzed a child's biometrics and diet, and detected a {data.risk_level} risk ({data.probability * 100:.1f}%) of stunting/malnutrition. Provide 2 short, simple, actionable sentences of parent guidance. First sentence in English, second sentence in Kannada."
         else:
-            prompt = f"Act as an empathetic pediatrician. The ML model analyzed a child's Q-CHAT scores and detected a {data.risk_level} risk ({data.probability * 100:.1f}%) of Autism Spectrum Disorder (ASD). Provide 2 short, simple, actionable sentences of parent guidance. First sentence in Kannada, second sentence in English."
+            prompt = f"Act as an empathetic pediatrician. The ML model analyzed a child's Q-CHAT scores and detected a {data.risk_level} risk ({data.probability * 100:.1f}%) of Autism Spectrum Disorder (ASD). Provide 2 short, simple, actionable sentences of parent guidance. First sentence in English, second sentence in Kannada."
             
         chat_session = gemini_model.start_chat(history=[])
         response = chat_session.send_message(prompt)
