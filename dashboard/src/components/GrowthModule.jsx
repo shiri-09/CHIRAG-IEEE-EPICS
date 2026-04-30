@@ -98,6 +98,59 @@ export default function GrowthModule() {
               </LineChart>
             </ResponsiveContainer>
           </div>
+          
+          {riskProbability !== null && (
+              <div className="mt-8 p-6 bg-white border border-slate-200 rounded-xl shadow-sm">
+                  <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                      <Activity className="h-5 w-5 text-indigo-600" />
+                      Clinical Risk Assessment
+                  </h3>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                      <div className="p-4 bg-slate-50 rounded-lg border border-slate-100">
+                          <p className="text-sm text-slate-500 mb-1">Stunting/Malnutrition Probability</p>
+                          <p className="text-3xl font-bold text-slate-800">
+                              {(riskProbability * 100).toFixed(1)}%
+                          </p>
+                      </div>
+                      <div className="p-4 bg-slate-50 rounded-lg border border-slate-100">
+                          <p className="text-sm text-slate-500 mb-1">Actionable Alert Level</p>
+                          <div className="flex items-center gap-2">
+                              {actionableAlert === 'Red' ? <AlertTriangle className="h-6 w-6 text-rose-500" /> : 
+                                actionableAlert === 'Orange' ? <AlertTriangle className="h-6 w-6 text-amber-500" /> : 
+                                <CheckCircle2 className="h-6 w-6 text-emerald-500" />}
+                              <p className={`text-2xl font-bold ${
+                                  actionableAlert === 'Red' ? 'text-rose-600' : 
+                                  actionableAlert === 'Orange' ? 'text-amber-600' : 'text-emerald-600'
+                              }`}>
+                                  {actionableAlert}
+                              </p>
+                          </div>
+                      </div>
+                  </div>
+
+                  {/* Gemini AI Generated Parent Guidance */}
+                  {parentGuidance && (
+                      <div className="mt-4 p-5 bg-indigo-50 border border-indigo-100 rounded-lg">
+                          <h4 className="text-sm font-semibold text-indigo-800 mb-2 flex items-center gap-2">
+                              <Sparkles className="h-4 w-4" />
+                              AI Parent Guidance (English & ಕನ್ನಡ)
+                          </h4>
+                          <p className="text-slate-700 whitespace-pre-line leading-relaxed">
+                              {parentGuidance}
+                          </p>
+                      </div>
+                  )}
+
+                  {/* Medical Disclaimer */}
+                  <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+                      <p className="text-xs text-amber-800 text-center flex items-center justify-center gap-2">
+                          <AlertTriangle className="h-4 w-4 flex-shrink-0" />
+                          <span><strong>Disclaimer:</strong> CHIRAG is an early screening tool powered by Machine Learning, not a diagnostic system. Always consult a pediatrician for clinical diagnosis and actual WHO Z-score calculations.</span>
+                      </p>
+                  </div>
+              </div>
+          )}
         </div>
 
         {/* Alerts */}

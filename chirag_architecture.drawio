@@ -1,0 +1,112 @@
+<mxfile host="app.diagrams.net" modified="2026-05-01" agent="CHIRAG" version="24.0">
+  <diagram name="CHIRAG Architecture" id="chirag-arch">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- Title -->
+        <mxCell id="title" value="CHIRAG — System Architecture" style="text;html=1;fontSize=22;fontStyle=1;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;fontColor=#1e293b;" vertex="1" parent="1">
+          <mxGeometry x="450" y="20" width="700" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== INPUT LAYER ========== -->
+        <mxCell id="input_group" value="INPUT LAYER" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#3b82f6;fontStyle=1;fontSize=14;verticalAlign=top;align=center;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="80" width="280" height="340" as="geometry"/>
+        </mxCell>
+        <mxCell id="in1" value="📋 Anganwadi Records&#xa;(Height, Weight, MUAC)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#93c5fd;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="120" width="240" height="45" as="geometry"/>
+        </mxCell>
+        <mxCell id="in2" value="🏥 EMR / School Health Forms" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#93c5fd;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="175" width="240" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="in3" value="📱 Parent App Input&#xa;(Q-CHAT, Diet, Screen Time)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#93c5fd;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="225" width="240" height="45" as="geometry"/>
+        </mxCell>
+        <mxCell id="in4" value="🌐 External APIs&#xa;(WHO Growth, CPCB Pollution)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#93c5fd;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="280" width="240" height="45" as="geometry"/>
+        </mxCell>
+        <mxCell id="in5" value="🧬 Kaggle ASD Dataset&#xa;(Real Q-CHAT-10 Screening)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#93c5fd;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="335" width="240" height="45" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== AI ENGINE ========== -->
+        <mxCell id="ai_group" value="AI / ML ENGINE" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#f59e0b;fontStyle=1;fontSize=14;verticalAlign=top;align=center;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="400" y="80" width="340" height="340" as="geometry"/>
+        </mxCell>
+        <mxCell id="ml1" value="🌳 Random Forest Classifier&#xa;(Stunting / Malnutrition Risk)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fefce8;strokeColor=#fcd34d;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="420" y="120" width="300" height="45" as="geometry"/>
+        </mxCell>
+        <mxCell id="ml2" value="🧠 SVM Classifier&#xa;(ASD Screening — Kaggle Data)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fefce8;strokeColor=#fcd34d;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="420" y="175" width="300" height="45" as="geometry"/>
+        </mxCell>
+        <mxCell id="ml3" value="📈 XGBoost Risk Classifier&#xa;(33-Feature Growth Velocity)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fefce8;strokeColor=#fcd34d;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="420" y="230" width="300" height="45" as="geometry"/>
+        </mxCell>
+        <mxCell id="ml4" value="✨ Gemini 2.5 Flash&#xa;(Empathetic Parent Guidance — Kannada + English)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef9c3;strokeColor=#eab308;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="420" y="285" width="300" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="ml5" value="⚡ FastAPI Backend&#xa;(REST API — /predict/growth, /predict/asd, /generate_guidance)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fefce8;strokeColor=#fcd34d;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="420" y="345" width="300" height="50" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== OUTPUT LAYER ========== -->
+        <mxCell id="out_group" value="OUTPUT LAYER (Dashboards)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dcfce7;strokeColor=#22c55e;fontStyle=1;fontSize=14;verticalAlign=top;align=center;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="820" y="80" width="300" height="340" as="geometry"/>
+        </mxCell>
+        <mxCell id="out1" value="👨‍⚕️ Doctor Dashboard&#xa;(Risk Scores, Missed Alerts, Follow-ups)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fdf4;strokeColor=#86efac;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="840" y="120" width="260" height="45" as="geometry"/>
+        </mxCell>
+        <mxCell id="out2" value="👪 Parent App&#xa;(Nudges, Guidance in Kannada, Emergency)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fdf4;strokeColor=#86efac;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="840" y="175" width="260" height="45" as="geometry"/>
+        </mxCell>
+        <mxCell id="out3" value="🏫 School Health Report&#xa;(Heatmaps, Class-level Analytics)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fdf4;strokeColor=#86efac;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="840" y="230" width="260" height="45" as="geometry"/>
+        </mxCell>
+        <mxCell id="out4" value="📊 Public Health Analytics&#xa;(De-identified District Dashboards)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fdf4;strokeColor=#86efac;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="840" y="285" width="260" height="45" as="geometry"/>
+        </mxCell>
+        <mxCell id="out5" value="⚠️ SCREENING TOOL — NOT DIAGNOSTIC" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef2f2;strokeColor=#ef4444;fontSize=10;fontStyle=1;fontColor=#dc2626;" vertex="1" parent="1">
+          <mxGeometry x="840" y="345" width="260" height="35" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== IMPLEMENTED MODULES BANNER ========== -->
+        <mxCell id="impl_group" value="✅ IMPLEMENTED MODULES (GitHub: shiri-09/CHIRAG-IEEE-EPICS)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ede9fe;strokeColor=#8b5cf6;fontStyle=1;fontSize=13;verticalAlign=top;align=center;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="460" width="1080" height="180" as="geometry"/>
+        </mxCell>
+        <mxCell id="im1" value="Module 1: Growth &amp; Nutrition&#xa;• Random Forest on WHO data&#xa;• Stunting risk % + Red/Orange/Green alerts&#xa;• Real child_data.csv (GitHub)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f3ff;strokeColor=#a78bfa;fontSize=10;align=left;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="60" y="500" width="240" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="im2" value="Module 2: ASD Screening&#xa;• SVM on Kaggle Toddler Dataset&#xa;• 10 Q-CHAT behavioral markers&#xa;• ASD risk probability + Red Flag" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f3ff;strokeColor=#a78bfa;fontSize=10;align=left;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="320" y="500" width="240" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="im3" value="Gemini AI Guidance Layer&#xa;• Gemini 2.5 Flash API&#xa;• Bilingual: Kannada + English&#xa;• Empathetic parent communication" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f3ff;strokeColor=#a78bfa;fontSize=10;align=left;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="580" y="500" width="240" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="im4" value="React Dashboard&#xa;• Growth Module UI&#xa;• Development Module UI&#xa;• Medical Disclaimer Banner" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f3ff;strokeColor=#a78bfa;fontSize=10;align=left;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="840" y="500" width="240" height="120" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== ARROWS ========== -->
+        <mxCell id="a1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#3b82f6;strokeWidth=2;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="input_group" target="ai_group">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="a2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#f59e0b;strokeWidth=2;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="ai_group" target="out_group">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="a3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#8b5cf6;strokeWidth=2;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="ai_group" target="impl_group">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== DATA SOURCE LABELS ========== -->
+        <mxCell id="ds1" value="Real Dataset Sources:" style="text;html=1;fontSize=11;fontStyle=5;align=left;fillColor=none;strokeColor=none;fontColor=#6b7280;" vertex="1" parent="1">
+          <mxGeometry x="40" y="660" width="200" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="ds2" value="• ASD: kaggle.com/datasets/fabdelja/autism-screening-for-toddlers&#xa;• Growth: github.com/dqsis/child-growth-charts (WHO-compliant)" style="text;html=1;fontSize=10;align=left;fillColor=none;strokeColor=none;fontColor=#9ca3af;" vertex="1" parent="1">
+          <mxGeometry x="40" y="680" width="500" height="35" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -4,12 +4,18 @@
 .env.development.local
 .env.test.local
 .env.production.local
+backend/.env
 
 # Dependencies
 node_modules/
 dist/
 dist-ssr/
 *.local
+
+# Python
+__pycache__/
+*.pyc
+*.pkl
 
 # Ignore all CHIRAG IEEE-EPICS documentation files from being committed
 IEEE-EPICS/

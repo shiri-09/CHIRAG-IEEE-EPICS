@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Check, TriangleAlert, Video, MapPin } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -12,14 +12,64 @@ const initialChecks = {
 
 export default function DevelopmentModule({ t }) {
   const [checks, setChecks] = useState(initialChecks);
+  const [riskProbability, setRiskProbability] = useState(null);
+  const [actionableAlert, setActionableAlert] = useState(null);
+  const [parentGuidance, setParentGuidance] = useState("");
+  const [mlData, setMlData] = useState({
+    asd_risk_probability: 0,
+    is_high_risk: false,
+    actionable_alert: 'Monitor',
+    loading: false
+  });
 
   const toggleCheck = (id) => {
     setChecks(prev => ({ ...prev, [id]: !prev[id] }));
   };
 
   const milestones = t.checklist.milestones;
-  const uncheckedCount = milestones.filter(m => !checks[m.id]).length;
-  const isHighRisk = uncheckedCount >= 2;
+  
+  // Calculate ML Risk dynamically when checks change
+  useEffect(() => {
+    // Backend expects exactly 10 Q-CHAT scores (0=Pass/Checked, 1=Fail/Unchecked)
+    // Note: If checked=true, it means milestone achieved (Pass=0). If unchecked=false, it means missed (Fail=1).
+    const q_scores = Array.from({ length: 10 }, (_, i) => checks[i + 1] ? 0 : 1);
+    
+    setMlData(prev => ({ ...prev, loading: true }));
+    fetch('http://localhost:8000/api/predict/asd', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ q_scores })
+    })
+    .then(res => res.json())
+    .then(data => {
+      setMlData({
+        ...data,
+        loading: false
+      });
+      setRiskProbability(data.asd_risk_probability);
+      setActionableAlert(data.actionable_alert);
+
+      // Fetch AI Guidance
+      fetch('http://localhost:8000/api/generate_guidance', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            risk_level: data.actionable_alert === 'Red Flag' ? 'High' : 'Low',
+            module_type: 'asd',
+            probability: data.asd_risk_probability
+        })
+      })
+      .then(res => res.json())
+      .then(gData => setParentGuidance(gData.guidance))
+      .catch(err => console.error('Error fetching guidance:', err));
+    })
+    .catch(err => {
+      console.error('Error fetching ASD prediction:', err);
+      setMlData(prev => ({ ...prev, loading: false }));
+    });
+  }, [checks]);
+
+  const isHighRisk = mlData.is_high_risk;
 
   return (
     <>
@@ -73,6 +123,57 @@ export default function DevelopmentModule({ t }) {
             ))}
           </div>
 
+          {riskProbability !== null && (
+              <div className="mt-8 p-6 bg-white border border-slate-200 rounded-xl shadow-sm">
+                  <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                      <Activity className="h-5 w-5 text-indigo-600" />
+                      Clinical ASD Risk Assessment
+                  </h3>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                      <div className="p-4 bg-slate-50 rounded-lg border border-slate-100">
+                          <p className="text-sm text-slate-500 mb-1">ASD Risk Probability</p>
+                          <p className="text-3xl font-bold text-slate-800">
+                              {(riskProbability * 100).toFixed(1)}%
+                          </p>
+                      </div>
+                      <div className="p-4 bg-slate-50 rounded-lg border border-slate-100">
+                          <p className="text-sm text-slate-500 mb-1">Actionable Alert Level</p>
+                          <div className="flex items-center gap-2">
+                              {actionableAlert === 'Red Flag' ? <AlertTriangle className="h-6 w-6 text-rose-500" /> : 
+                               <CheckCircle2 className="h-6 w-6 text-emerald-500" />}
+                              <p className={`text-2xl font-bold ${
+                                  actionableAlert === 'Red Flag' ? 'text-rose-600' : 'text-emerald-600'
+                              }`}>
+                                  {actionableAlert}
+                              </p>
+                          </div>
+                      </div>
+                  </div>
+
+                  {/* Gemini AI Generated Parent Guidance */}
+                  {parentGuidance && (
+                      <div className="mt-4 p-5 bg-indigo-50 border border-indigo-100 rounded-lg">
+                          <h4 className="text-sm font-semibold text-indigo-800 mb-2 flex items-center gap-2">
+                              <Sparkles className="h-4 w-4" />
+                              AI Parent Guidance (English & ಕನ್ನಡ)
+                          </h4>
+                          <p className="text-slate-700 whitespace-pre-line leading-relaxed">
+                              {parentGuidance}
+                          </p>
+                      </div>
+                  )}
+
+                  {/* Medical Disclaimer */}
+                  <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+                      <p className="text-xs text-amber-800 text-center flex items-center justify-center gap-2">
+                          <AlertTriangle className="h-3 w-3" />
+                          <strong>Disclaimer:</strong> CHIRAG is an early screening tool powered by ML, not a diagnostic system. Always consult a pediatric specialist for formal ASD diagnosis.
+                      </p>
+                  </div>
+              </div>
+          )}
+
           {isHighRisk && (
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
@@ -81,7 +182,9 @@ export default function DevelopmentModule({ t }) {
             >
               <TriangleAlert size={36} color="#e11d48" style={{ marginTop: 4 }} />
               <div>
-                <h3 style={{ color: '#e11d48', marginBottom: 8, fontSize: 19, fontWeight: 800 }}>{t.alerts.redFlagTitle}</h3>
+                <h3 style={{ color: '#e11d48', marginBottom: 8, fontSize: 19, fontWeight: 800 }}>
+                  {t.alerts.redFlagTitle} (ML Risk: {(mlData.asd_risk_probability * 100).toFixed(1)}%)
+                </h3>
                 <p style={{ color: '#9f1239', opacity: 0.9, marginBottom: 18, fontSize: 15, lineHeight: 1.5 }}>
                   {t.alerts.redFlagDesc}
                 </p>
