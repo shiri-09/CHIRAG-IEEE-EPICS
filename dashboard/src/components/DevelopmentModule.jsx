@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Check, TriangleAlert, Video, MapPin, Activity } from 'lucide-react';
+import { Check, TriangleAlert, Video, MapPin, Activity, AlertTriangle, CheckCircle2, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const initialChecks = {
@@ -124,27 +124,29 @@ export default function DevelopmentModule({ t }) {
           </div>
 
           {riskProbability !== null && (
-              <div className="mt-8 p-6 bg-white border border-slate-200 rounded-xl shadow-sm">
-                  <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
-                      <Activity className="h-5 w-5 text-indigo-600" />
-                      Clinical ASD Risk Assessment
-                  </h3>
+              <div className="glass-panel" style={{ marginTop: '24px' }}>
+                  <div className="card-header">
+                    <div className="card-title">
+                        <Activity size={20} color="#4f46e5" />
+                        Clinical ASD Risk Assessment
+                    </div>
+                  </div>
                   
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                      <div className="p-4 bg-slate-50 rounded-lg border border-slate-100">
-                          <p className="text-sm text-slate-500 mb-1">ASD Risk Probability</p>
-                          <p className="text-3xl font-bold text-slate-800">
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '24px' }}>
+                      <div style={{ padding: '16px', backgroundColor: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                          <p className="metric-label" style={{ marginTop: 0 }}>ASD Risk Probability</p>
+                          <p className="metric-value" style={{ marginTop: '8px', fontSize: '32px', color: '#0f172a' }}>
                               {(riskProbability * 100).toFixed(1)}%
                           </p>
                       </div>
-                      <div className="p-4 bg-slate-50 rounded-lg border border-slate-100">
-                          <p className="text-sm text-slate-500 mb-1">Actionable Alert Level</p>
-                          <div className="flex items-center gap-2">
-                              {actionableAlert === 'Red Flag' ? <AlertTriangle className="h-6 w-6 text-rose-500" /> : 
-                               <CheckCircle2 className="h-6 w-6 text-emerald-500" />}
-                              <p className={`text-2xl font-bold ${
-                                  actionableAlert === 'Red Flag' ? 'text-rose-600' : 'text-emerald-600'
-                              }`}>
+                      <div style={{ padding: '16px', backgroundColor: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                          <p className="metric-label" style={{ marginTop: 0 }}>Actionable Alert Level</p>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '8px' }}>
+                              {actionableAlert === 'Red Flag' ? <AlertTriangle size={28} color="#e11d48" /> : 
+                               <CheckCircle2 size={28} color="#059669" />}
+                              <p className="metric-value" style={{ marginTop: 0, fontSize: '28px', color: 
+                                  actionableAlert === 'Red Flag' ? '#e11d48' : '#059669'
+                              }}>
                                   {actionableAlert}
                               </p>
                           </div>
@@ -153,22 +155,22 @@ export default function DevelopmentModule({ t }) {
 
                   {/* Gemini AI Generated Parent Guidance */}
                   {parentGuidance && (
-                      <div className="mt-4 p-5 bg-indigo-50 border border-indigo-100 rounded-lg">
-                          <h4 className="text-sm font-semibold text-indigo-800 mb-2 flex items-center gap-2">
-                              <Sparkles className="h-4 w-4" />
+                      <div style={{ marginTop: '16px', padding: '20px', backgroundColor: '#eef2ff', border: '1px solid #c7d2fe', borderRadius: '12px' }}>
+                          <h4 style={{ fontSize: '15px', fontWeight: '600', color: '#3730a3', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                              <Sparkles size={18} />
                               AI Parent Guidance (English & ಕನ್ನಡ)
                           </h4>
-                          <p className="text-slate-700 whitespace-pre-line leading-relaxed">
+                          <p style={{ color: '#334155', whiteSpace: 'pre-line', lineHeight: '1.6', fontSize: '15px' }}>
                               {parentGuidance}
                           </p>
                       </div>
                   )}
 
                   {/* Medical Disclaimer */}
-                  <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
-                      <p className="text-xs text-amber-800 text-center flex items-center justify-center gap-2">
-                          <AlertTriangle className="h-3 w-3" />
-                          <strong>Disclaimer:</strong> CHIRAG is an early screening tool powered by ML, not a diagnostic system. Always consult a pediatric specialist for formal ASD diagnosis.
+                  <div style={{ marginTop: '16px', padding: '16px', backgroundColor: '#fffbeb', border: '1px solid #fde68a', borderRadius: '12px' }}>
+                      <p style={{ fontSize: '13px', color: '#92400e', display: 'flex', alignItems: 'flex-start', gap: '8px', margin: 0, lineHeight: '1.5' }}>
+                          <AlertTriangle size={16} style={{ flexShrink: 0, marginTop: '2px' }} />
+                          <span><strong>Disclaimer:</strong> CHIRAG is an early screening tool powered by ML, not a diagnostic system. Always consult a pediatric specialist for formal ASD diagnosis.</span>
                       </p>
                   </div>
               </div>
