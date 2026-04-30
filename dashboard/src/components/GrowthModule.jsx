@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
-import { Scale, Activity, Apple, Sparkles, AlertTriangle, ShieldCheck } from 'lucide-react';
+import { Scale, Activity, Apple, Sparkles, AlertTriangle, ShieldCheck, CheckCircle2 } from 'lucide-react';
 
 const growthData = [
   { age: '6m', current: 50, projected: 50, ideal: 50 },
@@ -14,6 +14,44 @@ const growthData = [
 ];
 
 export default function GrowthModule() {
+  const [riskProbability, setRiskProbability] = useState(null);
+  const [actionableAlert, setActionableAlert] = useState(null);
+  const [parentGuidance, setParentGuidance] = useState("");
+
+  useEffect(() => {
+    // Fetch Growth ML Risk on load using dummy patient parameters
+    fetch('http://localhost:8000/api/predict/growth', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        age_months: 28,
+        weight_kg: 10.5,
+        height_cm: 82.0,
+        diet_diversity: 4
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      setRiskProbability(data.stunting_risk_probability);
+      setActionableAlert(data.actionable_alert);
+
+      // Fetch AI Guidance
+      fetch('http://localhost:8000/api/generate_guidance', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            risk_level: data.actionable_alert === 'Red' ? 'High' : 'Low',
+            module_type: 'growth',
+            probability: data.stunting_risk_probability
+        })
+      })
+      .then(res => res.json())
+      .then(aiData => setParentGuidance(aiData.guidance))
+      .catch(err => console.error(err));
+    })
+    .catch(err => console.error(err));
+  }, []);
+
   return (
     <>
       <header className="header">
