@@ -123,8 +123,8 @@ export default function GrowthModule() {
             <div className="card-title">Future Obesity & Growth Trajectory (LSTM AI)</div>
             <span className="status-badge status-warning">Orange Alert</span>
           </div>
-          <div style={{ height: 320, width: '100%', marginTop: 24 }}>
-            <ResponsiveContainer>
+          <div style={{ height: 320, width: '100%', minWidth: 0, marginTop: 24 }}>
+            <ResponsiveContainer width="100%" height="100%">
               <LineChart data={growthData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
                 <XAxis dataKey="age" stroke="#64748b" tick={{ fill: '#64748b', fontSize: 13 }} axisLine={false} tickLine={false} />

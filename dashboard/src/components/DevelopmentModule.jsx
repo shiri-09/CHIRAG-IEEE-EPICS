@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Check, TriangleAlert, Video, MapPin } from 'lucide-react';
+import { Check, TriangleAlert, Video, MapPin, Activity } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const initialChecks = {
